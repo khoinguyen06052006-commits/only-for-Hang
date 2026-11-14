@@ -1,0 +1,96 @@
+{
+  "config": {
+    "passcode": "1402",
+    "anniversaryDate": "2023-10-20",
+    "recipientName": "Em Bé Của Anh",
+    "senderName": "Người thương của em ❤️",
+    "musicUrl": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3"
+  },
+  "letters": [
+    {
+      "date": "2026-11-13",
+      "letterNumber": "Bức thư tình #01",
+      "title": "Hôm Qua: Những Kỷ Niệm Ngọt Ngào Đầu Tiên",
+      "imageUrl": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+      "caption": "Mỗi bước đi đều có em cạnh bên 🌿",
+      "message": [
+        "Chào cô gái đáng yêu của anh,",
+        "Ngày hôm qua trôi qua thật êm đềm khi anh được nghe giọng nói ngọt ngào và tiếng cười trong trẻo của em. Cảm ơn em vì đã luôn là chốn bình yên để anh trở về sau những bộn bề của cuộc sống.",
+        "Anh luôn trân trọng từng khoảnh khắc nhỏ bé: một tách trà ấm, một cái nắm tay siết nhẹ trong gió lạnh. Chúc em một giấc ngủ thật ngon và mơ về anh nhé!"
+      ],
+      "question": {
+        "prompt": "Hôm qua điều gì làm em thấy ấm áp nhất?",
+        "options": [
+          "Được nghe giọng nói của anh",
+          "Cái ôm ấm áp trước khi về",
+          "Bữa tối ngon lành bên nhau",
+          "Cả 3 điều trên luôn! 💕"
+        ]
+      }
+    },
+    {
+      "date": "2026-11-14",
+      "letterNumber": "Bức thư tình #02",
+      "title": "Hôm Nay: Nắng Ấm Dịu Dàng Giữa Mùa Đông",
+      "imageUrl": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+      "caption": "Nụ cười của em là ánh mặt trời ấm áp nhất ☀️",
+      "message": [
+        "Gửi em, mảnh ghép dịu dàng nhất của cuộc đời anh,",
+        "Hôm nay trời có chút se se lạnh, em nhớ mặc áo ấm khi ra ngoài nhé. Sáng nay thức dậy, điều đầu tiên anh nghĩ đến chính là nụ cười của em.",
+        "Dù cuộc sống ngoài kia có vội vã đến đâu, chỉ cần nghĩ đến việc tối nay được gặp em, lòng anh lại thấy ấm áp lạ kỳ. Chúc em một ngày làm việc thật nhiều niềm vui và luôn rạng rỡ như ánh mặt trời!",
+        "Thương em thật nhiều và mãi mãi bên em!"
+      ],
+      "question": {
+        "prompt": "Hôm nay em muốn cùng anh làm điều gì nhất nè?",
+        "options": [
+          "Đi dạo phố hít khí lạnh",
+          "Cùng ăn một bữa tối ấm cúng",
+          "Ngồi cà phê nghe nhạc",
+          "Chỉ cần bên nhau là được 🥰"
+        ]
+      }
+    },
+    {
+      "date": "2026-11-15",
+      "letterNumber": "Bức thư tình #03",
+      "title": "Ngày Mai: Lời Hẹn Hò Cuối Tuần Mong Chờ",
+      "imageUrl": "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=80",
+      "caption": "Ngày mai chúng mình lại có hẹn với nhau 💕",
+      "message": [
+        "Bức thư này được anh viết sẵn cho ngày mai...",
+        "Cuối tuần rồi, hãy gác lại hết những âu lo và dành trọn vẹn thời gian cho chúng mình em nhé! Anh đã chuẩn bị một kế hoạch nhỏ thật ngọt ngào dành riêng cho em.",
+        "Hẹn gặp lại em vào một ngày mai tràn ngập nắng ấm và hạnh phúc!"
+      ],
+      "question": {
+        "prompt": "Kế hoạch ngày mai em hào hứng nhất điều gì?",
+        "options": [
+          "Ngủ nướng thêm một chút",
+          "Buổi hẹn hò bất ngờ",
+          "Được ăn món em thích",
+          "Được anh đón đi chơi ✨"
+        ]
+      }
+    }
+  ],
+  "fallbackLetter": {
+    "letterNumber": "Bức thư tình đặc biệt",
+    "title": "Bức Thư Tình Gửi Người Anh Thương",
+    "imageUrl": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+    "caption": "Mỗi ngày trôi qua đều là một ngày yêu em 💖",
+    "message": [
+      "Gửi em bé đáng yêu của anh,",
+      "Hôm nay anh chưa kịp cập nhật bức thư mới vào trang nhật ký, nhưng tình cảm anh dành cho em thì chưa bao giờ vơi bớt cả.",
+      "Cảm ơn em đã luôn là nguồn năng lượng tích cực và dịu dàng nhất của anh. Hãy nhớ uống nhiều nước, ăn uống đúng giờ và giữ nụ cười thật tươi trên môi nhé!",
+      "Anh yêu em nhiều hơn ngày hôm qua và ít hơn ngày mai một chút!"
+    ],
+    "question": {
+      "prompt": "Hôm nay em có nhớ anh nhiều không?",
+      "options": [
+        "Rất rất nhiều! 💕",
+        "Nhiều hơn cả hôm qua 🥰",
+        "Nhớ cả ngày lẫn đêm 🌙",
+        "Không thể đếm xuể ✨"
+      ]
+    }
+  }
+}

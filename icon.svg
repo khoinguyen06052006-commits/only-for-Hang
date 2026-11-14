@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background romantic rose gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="50%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#9f1239"/>
+    </linearGradient>
+
+    <!-- Golden shine for wax ring -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <!-- Soft shadow filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#4c0519" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- App icon background with rounded corners (maskable safe area) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+
+  <!-- Decorative dashed golden ring -->
+  <circle cx="256" cy="256" r="195" fill="none" stroke="url(#goldGrad)" stroke-width="6" stroke-dasharray="14 10" opacity="0.6"/>
+
+  <!-- Inner wax seal circle -->
+  <circle cx="256" cy="256" r="160" fill="#881337" opacity="0.45" filter="url(#shadow)"/>
+
+  <!-- Romantic Love Letter Envelope Graphic -->
+  <g transform="translate(106, 126)" filter="url(#shadow)">
+    <!-- Envelope Body (Back) -->
+    <rect x="0" y="50" width="300" height="190" rx="16" fill="#fdfbf7"/>
+    
+    <!-- Paper peek -->
+    <rect x="25" y="10" width="250" height="80" rx="8" fill="#fff1f2" stroke="#fecdd3" stroke-width="2"/>
+    <line x1="50" y1="35" x2="170" y2="35" stroke="#f43f5e" stroke-width="4" stroke-linecap="round"/>
+    <line x1="50" y1="55" x2="210" y2="55" stroke="#fda4af" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Envelope Flap (Folded open) -->
+    <polygon points="0,50 150,155 300,50" fill="#f5ede0"/>
+    <polygon points="0,50 150,0 300,50" fill="#eeddcb" opacity="0.7"/>
+
+    <!-- Envelope Front Fold Lines -->
+    <polygon points="0,240 120,135 0,70" fill="#ecdcc9" opacity="0.85"/>
+    <polygon points="300,240 180,135 300,70" fill="#e4ceba" opacity="0.85"/>
+    <polygon points="0,240 150,140 300,240" fill="#dec7b4"/>
+
+    <!-- Crimson Wax Seal in Center -->
+    <circle cx="150" cy="140" r="42" fill="#991b1b" stroke="#fef08a" stroke-width="3"/>
+    
+    <!-- Heart Icon inside Seal -->
+    <path d="M 150 155 C 150 155 130 142 125 132 C 120 122 126 112 136 112 C 142 112 147 116 150 120 C 153 116 158 112 164 112 C 174 112 180 122 175 132 C 170 142 150 155 150 155 Z" fill="#fef08a"/>
+  </g>
+
+  <!-- Sparkles -->
+  <polygon points="410,90 415,105 430,110 415,115 410,130 405,115 390,110 405,105" fill="#fef08a" opacity="0.9"/>
+  <polygon points="90,390 93,400 103,403 93,406 90,416 87,406 77,403 87,400" fill="#fef08a" opacity="0.8"/>
+  <polygon points="420,380 422,388 430,390 422,392 420,400 418,392 410,390 418,388" fill="#ffffff" opacity="0.85"/>
+</svg>

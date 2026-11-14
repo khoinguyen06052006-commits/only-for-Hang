@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bức Thư Tình Gửi Em 💖</title>
+  
+  <!-- ================= PWA CONFIGURATION ================= -->
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Màu sắc giao diện thanh trạng thái (Status Bar) -->
+  <meta name="theme-color" content="#fff1f2">
+  <meta name="color-scheme" content="light">
+
+  <!-- Cấu hình chuẩn cho iOS Safari (Add to Home Screen) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Thư Tình 💖">
+  
+  <!-- Icon ứng dụng cho iPhone/iPad -->
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+
+  <!-- Cấu hình cho Android & Windows -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Thư Tình 💖">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20width=%22100%22%20height=%22100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+  
+  <!-- Google Fonts: Dancing Script (viết tay lãng mạn), Lora (serif thanh lịch), Be Vietnam Pro (giao diện) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- File CSS Mobile-First -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Hiệu ứng cánh hoa bay lơ lửng toàn màn hình -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- THANH ĐIỀU HƯỚNG TRÊN CÙNG (TOP BAR) -->
+  <header class="top-nav-bar">
+    <!-- Nút mở Hộp Thư Kỷ Niệm (Archive) -->
+    <button id="archive-toggle-btn" class="nav-btn archive-btn" aria-label="Mở hộp thư kỷ niệm" title="Mở hộp thư kỷ niệm">
+      <span class="nav-icon">📮</span>
+      <span class="nav-label">Hộp Thư</span>
+    </button>
+
+    <!-- Nút điều khiển nhạc nền -->
+    <button id="music-toggle-btn" class="nav-btn music-btn" aria-label="Bật/Tắt nhạc nền" title="Bật/Tắt nhạc nền">
+      <div class="music-disc" id="music-disc">
+        <span class="music-note">🎵</span>
+      </div>
+      <div class="sound-wave" id="sound-wave">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </button>
+  </header>
+
+  <!-- Thẻ audio chứa nhạc nền nhẹ nhàng -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
+    <source src="https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/menu.ogg" type="audio/ogg">
+  </audio>
+
+  <!-- Container chính tối ưu hóa cho màn hình điện thoại (Mobile-First) -->
+  <main class="app-viewport">
+    
+    <!-- ==============================================
+         MÀN HÌNH 1: MÀN HÌNH KHÓA (PASSCODE SCREEN)
+         ============================================== -->
+    <section id="lock-screen" class="screen active">
+      <div class="lock-card">
+        <div class="lock-icon-wrap">
+          <div class="lock-heart-pulse">💖</div>
+          <div class="lock-ring"></div>
+        </div>
+
+        <h1 class="lock-title">Vùng Kỷ Niệm</h1>
+        <p class="lock-subtitle">Nhập mật mã 4 chữ số để mở bức thư tình bí mật</p>
+
+        <!-- 4 ô chấm tròn mã PIN -->
+        <div class="pin-display" id="pin-display">
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+        </div>
+
+        <!-- Thông báo lỗi khi nhập sai -->
+        <div class="pin-message" id="pin-message"></div>
+
+        <!-- Bàn phím số cảm ứng tối giản -->
+        <div class="numpad" id="numpad">
+          <button class="num-key" data-key="1">1</button>
+          <button class="num-key" data-key="2">2</button>
+          <button class="num-key" data-key="3">3</button>
+          <button class="num-key" data-key="4">4</button>
+          <button class="num-key" data-key="5">5</button>
+          <button class="num-key" data-key="6">6</button>
+          <button class="num-key" data-key="7">7</button>
+          <button class="num-key" data-key="8">8</button>
+          <button class="num-key" data-key="9">9</button>
+          <button class="num-key special-key hint-key" id="hint-btn" title="Xem gợi ý">💡</button>
+          <button class="num-key" data-key="0">0</button>
+          <button class="num-key special-key delete-key" id="backspace-btn" title="Xóa số">⌫</button>
+        </div>
+
+        <!-- Gợi ý lãng mạn -->
+        <div class="passcode-hint" id="passcode-hint">
+          <span>💌 Gợi ý: Ngày Valentine ngọt ngào (Mặc định: <strong>1402</strong>)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         MÀN HÌNH 2: PHONG BÌ THƯ VỚI CON DẤU SÁP (ENVELOPE SCREEN)
+         ============================================== -->
+    <section id="envelope-screen" class="screen">
+      <div class="envelope-intro">
+        <p class="envelope-instruction">Có một bức thư được gửi đến em...</p>
+        <span class="down-arrow">✨</span>
+      </div>
+
+      <div class="envelope-stage" id="envelope-stage">
+        <!-- Phong bì 3D -->
+        <div class="envelope" id="envelope">
+          <div class="envelope-back"></div>
+          
+          <!-- Mảnh giấy hé lộ bên trong -->
+          <div class="envelope-paper-peek" id="envelope-paper-peek">
+            <span class="peek-text" id="peek-text">Gửi người anh thương...</span>
+          </div>
+
+          <!-- Nắp phong bì mở gập 3D -->
+          <div class="envelope-flap" id="envelope-flap"></div>
+          <div class="envelope-front"></div>
+
+          <!-- Con dấu sáp (Wax Seal) ở giữa nắp phong bì -->
+          <button class="wax-seal" id="wax-seal" aria-label="Chạm vào con dấu sáp để mở thiệp">
+            <div class="seal-ring"></div>
+            <div class="seal-inner">
+              <span class="seal-icon">❤</span>
+              <span class="seal-initials">Forever</span>
+            </div>
+            <div class="seal-sparkle"></div>
+          </button>
+        </div>
+      </div>
+
+      <p class="tap-seal-hint" id="tap-seal-hint">
+        <span>👇 Chạm vào con dấu sáp để mở thư</span>
+      </p>
+    </section>
+
+    <!-- ==============================================
+         MÀN HÌNH 3: BỨC THƯ TÌNH ĐIỆN TỬ (LETTER VIEW)
+         ============================================== -->
+    <section id="letter-screen" class="screen">
+      <div class="letter-scroll-wrapper">
+        <article class="vintage-letter" id="vintage-letter">
+          
+          <!-- Họa tiết góc cổ điển & đường viền mỹ thuật -->
+          <div class="letter-corner top-left"></div>
+          <div class="letter-corner top-right"></div>
+          <div class="letter-corner bottom-left"></div>
+          <div class="letter-corner bottom-right"></div>
+
+          <!-- Tem thư cổ điển trang trí phía trên -->
+          <div class="vintage-stamp">
+            <div class="stamp-inner">
+              <span class="stamp-heart">💌</span>
+              <span class="stamp-text">LOVE AIRMAIL</span>
+            </div>
+            <div class="postmark">
+              <span>SPECIAL DELIVERY</span>
+              <small>★ FOREVER ★</small>
+            </div>
+          </div>
+
+          <!-- ================= HEADER BỨC THƯ ================= -->
+          <header class="letter-header">
+            <div class="letter-meta-row">
+              <span class="letter-order-badge" id="letter-number">Bức thư tình #01</span>
+              <time class="letter-date" id="letter-date">Đang cập nhật...</time>
+            </div>
+
+            <!-- Bộ đếm số ngày yêu nhau -->
+            <div class="love-counter-card">
+              <div class="love-counter-badge">
+                <span class="pulsing-heart">💓</span>
+                <span class="counter-label">Chúng mình đã bên nhau</span>
+              </div>
+              <div class="love-counter-value">
+                <span class="days-num" id="love-days-count">0</span>
+                <span class="days-unit">ngày</span>
+              </div>
+              <div class="love-counter-sub" id="love-time-detail">
+                và từng khoảnh khắc đều thật dịu êm...
+              </div>
+            </div>
+          </header>
+
+          <!-- ================= VISUAL: KHUNG ẢNH POLAROID ================= -->
+          <figure class="polaroid-frame">
+            <div class="washi-tape"></div>
+            <div class="polaroid-photo-wrapper">
+              <img 
+                id="polaroid-image" 
+                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80" 
+                alt="Khoảnh khắc ngọt ngào" 
+                class="polaroid-img"
+                loading="lazy"
+              >
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <figcaption class="polaroid-caption" id="polaroid-caption">
+              "Bình yên là khi có em bên cạnh 🌸"
+            </figcaption>
+          </figure>
+
+          <!-- ================= BODY: LỜI NHẮN VỚI TYPEWRITER EFFECT ================= -->
+          <section class="letter-body">
+            <div class="letter-salutation">
+              <h2 class="salutation-text" id="letter-salutation">Gửi Em, Mảnh Ghép Dịu Dàng Nhất...</h2>
+            </div>
+
+            <!-- Khung văn bản đánh máy -->
+            <div class="typewriter-container">
+              <div id="typewriter-content" class="typewriter-content"></div>
+              <span class="typewriter-cursor" id="typewriter-cursor">|</span>
+            </div>
+
+            <!-- Nút bấm xem nhanh nội dung -->
+            <button id="skip-typing-btn" class="skip-btn" title="Nhấn để hiện toàn bộ lời nhắn">
+              ⏩ Đọc toàn bộ thư
+            </button>
+
+            <!-- ================= CÂU HỎI NHỎ HÔM NAY (DAILY QUESTION) ================= -->
+            <div class="daily-question-box" id="daily-question-box">
+              <div class="question-header">
+                <span class="question-icon">💭</span>
+                <span class="question-title" id="question-prompt">Câu hỏi nhỏ hôm nay:</span>
+              </div>
+              <div class="question-options" id="question-options"></div>
+              <div class="question-feedback" id="question-feedback"></div>
+            </div>
+
+            <!-- Lời kết & Chữ ký viết tay -->
+            <div class="letter-signature">
+              <p class="sign-farewell">Thương em thật nhiều,</p>
+              <p class="signature-name" id="signature-name">Người thương của em 🖋️</p>
+            </div>
+
+            <!-- ================= HỘP THƯ PHẢN HỒI LỜI NHẮN (GOOGLE SHEETS) ================= -->
+            <div class="letter-reply-box" id="letter-reply-box">
+              <div class="reply-header">
+                <span class="reply-icon">💌</span>
+                <span class="reply-title">Gửi lời nhắn cho anh</span>
+              </div>
+              <p class="reply-subtitle">Lời nhắn của em sẽ được lưu trực tiếp vào nhật ký của anh ✨</p>
+
+              <!-- Khung chọn nhanh: Điều em muốn làm nhất hôm nay -->
+              <div class="wish-selection-box" id="wish-selection-box">
+                <div class="wish-header">
+                  <span class="wish-sparkle">✨</span>
+                  <span class="wish-title">Điều em muốn làm nhất hôm nay:</span>
+                </div>
+                <div class="wish-tags-grid" id="wish-tags-grid">
+                  <button type="button" class="wish-tag-btn" data-wish="Đi ăn món ngon 🍜">
+                    <span>Đi ăn món ngon 🍜</span>
+                  </button>
+                  <button type="button" class="wish-tag-btn" data-wish="Đi dạo hóng gió 🛵">
+                    <span>Đi dạo hóng gió 🛵</span>
+                  </button>
+                  <button type="button" class="wish-tag-btn" data-wish="Xem phim cùng nhau 🎬">
+                    <span>Xem phim cùng nhau 🎬</span>
+                  </button>
+                  <button type="button" class="wish-tag-btn" data-wish="Chỉ cần được ôm 🥺">
+                    <span>Chỉ cần được ôm 🥺</span>
+                  </button>
+                  <button type="button" class="wish-tag-btn" data-wish="Ngủ nướng cả ngày 😴">
+                    <span>Ngủ nướng cả ngày 😴</span>
+                  </button>
+                  <button type="button" class="wish-tag-btn wish-other-toggle" id="wish-other-toggle" data-wish="Khác">
+                    <span>Lựa chọn khác... ✍️</span>
+                  </button>
+                </div>
+
+                <!-- Ô nhập mong muốn khác nếu có -->
+                <div class="wish-custom-container" id="wish-custom-container" style="display: none;">
+                  <input 
+                    type="text" 
+                    id="wish-custom-input" 
+                    class="wish-custom-input" 
+                    placeholder="Nhập điều em mong muốn hôm nay nhé... 💖" 
+                    maxlength="120"
+                  >
+                </div>
+              </div>
+              
+              <div class="reply-input-wrap">
+                <textarea 
+                  id="reply-text-input" 
+                  class="reply-textarea" 
+                  placeholder="Viết gì đó cho anh nhé... 💕" 
+                  rows="3"
+                  maxlength="500"
+                ></textarea>
+                <div class="reply-toolbar">
+                  <span class="reply-counter" id="reply-char-counter">0/500</span>
+                  <button id="send-reply-btn" class="send-reply-btn" type="button">
+                    <span class="send-icon" id="send-icon">💌</span>
+                    <span class="send-text" id="send-text">Gửi lời nhắn</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="reply-status" id="reply-status"></div>
+            </div>
+          </section>
+
+          <!-- ================= INTERACTIVE FOOTER ================= -->
+          <footer class="letter-footer">
+            <div class="hug-action-wrap">
+              <button id="send-hug-btn" class="hug-btn" aria-label="Gửi một cái ôm">
+                <span class="hug-icon">🤗</span>
+                <span class="hug-label">Gửi Một Cái Ôm</span>
+                <span class="hug-badge" id="hug-counter">0</span>
+              </button>
+              <p class="hug-feedback" id="hug-feedback">Chạm để gửi một cái ôm thật ấm áp!</p>
+            </div>
+
+            <div class="letter-actions-bottom">
+              <button id="open-archive-from-footer-btn" class="text-btn">
+                <span>📖 Xem Hộp Thư Kỷ Niệm</span>
+              </button>
+              <button id="rewatch-btn" class="text-btn">
+                <span>🔄 Đóng thiệp & đọc lại</span>
+              </button>
+            </div>
+          </footer>
+
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================================
+       MODAL: HỘP THƯ KỶ NIỆM (ARCHIVE DRAWER)
+       ============================================== -->
+  <div id="archive-modal" class="archive-modal" aria-hidden="true">
+    <div class="archive-backdrop" id="archive-backdrop"></div>
+    <div class="archive-drawer">
+      <div class="drawer-drag-handle"></div>
+      
+      <div class="archive-drawer-header">
+        <div class="drawer-title-group">
+          <h2 class="drawer-title">Hộp Thư Kỷ Niệm 📮</h2>
+          <p class="drawer-subtitle">Những bức thư chúng mình gửi trao theo từng ngày</p>
+        </div>
+        <button id="close-archive-btn" class="close-drawer-btn" aria-label="Đóng hộp thư">✕</button>
+      </div>
+
+      <!-- Thanh thông tin ngày hiện tại -->
+      <div class="archive-current-date-pill">
+        <span>Hôm nay: <strong id="archive-today-text">--/--/----</strong></span>
+      </div>
+
+      <!-- Danh sách thiệp theo ngày -->
+      <div class="archive-cards-list" id="archive-cards-list">
+        <!-- Render động từ data.json -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST THÔNG BÁO DỄ THƯƠNG (POPUP TOAST) -->
+  <div id="toast-notification" class="toast-popup" role="alert">
+    <span class="toast-icon" id="toast-icon">✨</span>
+    <span class="toast-message" id="toast-message">Thông báo</span>
+  </div>
+
+  <!-- Container chứa các hạt trái tim bay lên khi ấn nút "Gửi cái ôm" -->
+  <div id="hearts-container" class="hearts-floating-layer"></div>
+
+  <!-- Script xử lý toàn bộ logic tương tác -->
+  <script src="script.js"></script>
+</body>
+</html>
